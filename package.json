@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "tomwilson <tomas.f.wilson@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.1.0",
+    "@babel/core": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0"
+  }
 }
