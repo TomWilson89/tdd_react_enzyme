@@ -10,13 +10,17 @@
     "lint": "eslint \"src/**/*.+(js|jsx)\" ",
     "lint:fix": "eslint \"src/**/*.+(js|jsx)\" --fix",
     "format": "yarn lint:fix && prettier --write --config .prettierrc.json \"src/**/*.+(js|jsx)\"",
-    "prepare": "husky install"
+    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test:watch": "yarn test -w",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",
     "@babel/core": "7.1.0",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
+    "babel-jest": "^27.3.1",
     "babel-loader": "8.0.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "1.0.0",
@@ -31,6 +35,8 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "git-commit-msg-linter": "^3.2.8",
     "husky": "^7.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
     "style-loader": "0.23.0",
