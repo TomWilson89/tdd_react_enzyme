@@ -7,8 +7,10 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode development",
-    "lint": "eslint \"src/**/*.+(js|jsx)\" --fix",
-    "format": "yarn lint && prettier --write --config .prettierrc.json \"src/**/*.+(js|jsx)\""
+    "lint": "eslint \"src/**/*.+(js|jsx)\" ",
+    "lint:fix": "eslint \"src/**/*.+(js|jsx)\" --fix",
+    "format": "yarn lint:fix && prettier --write --config .prettierrc.json \"src/**/*.+(js|jsx)\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",
@@ -28,6 +30,8 @@
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "git-commit-msg-linter": "^3.2.8",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
     "style-loader": "0.23.0",
     "webpack": "^5.64.0",
