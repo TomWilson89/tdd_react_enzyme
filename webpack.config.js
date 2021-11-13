@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.jsx',
   mode: 'development',
   module: {
     rules: [
@@ -19,16 +20,25 @@ module.exports = {
     ],
   },
   resolve: { extensions: ['*', '.js', '.jsx'] },
+  devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, 'dist/'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'public/js'),
+    publicPath: '/public/js',
     filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public/'),
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    static: {
+      directory: './public',
+    },
+    historyApiFallback: true,
     port: 3000,
-    publicPath: 'http://localhost:3000/dist/',
-    hotOnly: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
+  plugins: [new CleanWebpackPlugin()],
 };
