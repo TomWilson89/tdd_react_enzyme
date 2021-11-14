@@ -11,7 +11,7 @@
     "lint:fix": "eslint \"src/**/*.+(js|jsx)\" --fix",
     "format": "yarn lint:fix && prettier --write --config .prettierrc.json \"src/**/*.+(js|jsx)\"",
     "test": "jest --passWithNoTests --no-cache --runInBand",
-    "test:watch": "yarn test -w",
+    "test:watch": "yarn test --watch",
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage"
   },
