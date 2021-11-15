@@ -6,7 +6,9 @@ import { checkProps, findByTestAttribute } from '../utils';
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
-const makeSut = (props = { success: false }) => {
+const defaultProps = { success: false };
+
+const makeSut = (props = defaultProps) => {
   const sut = shallow(<Congrats {...props} />);
   return { sut };
 };
