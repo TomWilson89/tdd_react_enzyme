@@ -1,8 +1,8 @@
 import EnzymeAdapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
-import Congrats from '../../src/components/congrats';
-import { findByTestAttribute } from '../utils';
+import { Congrats } from '../../src/components';
+import { checkProps, findByTestAttribute } from '../utils';
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
@@ -29,5 +29,10 @@ describe('Congrats component', () => {
     const successText = findByTestAttribute(sut, 'success-text');
     expect(successText.exists()).toBe(true);
     expect(successText.text()).toBe('Congrats!');
+  });
+
+  test('should not throw warning with expected props', () => {
+    const expectedProps = { success: false };
+    checkProps(Congrats, expectedProps);
   });
 });
