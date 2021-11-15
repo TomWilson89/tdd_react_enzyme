@@ -1,10 +1,7 @@
-import EnzymeAdapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Enzyme, { shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import { Congrats } from '../../src/components';
 import { checkProps, findByTestAttribute } from '../utils';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const defaultProps = { success: false };
 
