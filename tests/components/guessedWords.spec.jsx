@@ -42,5 +42,11 @@ describe('GuessedWords', () => {
     });
   });
 
-  describe('With word guessed', () => {});
+  describe('With word guessed', () => {
+    test('should render component with guessed words', () => {
+      const { sut } = makeSut();
+      const guessedWordsComponent = findByTestAttribute(sut, 'guessed-words');
+      expect(guessedWordsComponent.length).toBe(1);
+    });
+  });
 });
