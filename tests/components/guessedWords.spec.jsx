@@ -21,7 +21,7 @@ describe('GuessedWords', () => {
     expect(appComponent.length).toBe(1);
   });
 
-  test('should nopt throw warning with expected props', () => {
+  test('should not throw warning with expected props', () => {
     const expectedProps = {
       guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
     };
