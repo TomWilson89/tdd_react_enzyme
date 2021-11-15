@@ -18,7 +18,7 @@ const GuessedWords = ({ guessedWords }) => {
             <tbody>
               {guessedWords.map((word, index) => {
                 return (
-                  <tr key={word}>
+                  <tr data-testid="guessed-word" key={word}>
                     <td>{index + 1}</td>
                     <td>{word.guessedWord}</td>
                     <td>{word.letterMatchCount}</td>

@@ -43,10 +43,27 @@ describe('GuessedWords', () => {
   });
 
   describe('With word guessed', () => {
+    let guessedWordsProps;
+
+    beforeEach(() => {
+      guessedWordsProps = {
+        guessedWords: [
+          { guessedWord: 'train', letterMatchCount: 3 },
+          { guessedWord: 'agile', letterMatchCount: 1 },
+          { guessedWord: 'party', letterMatchCount: 5 },
+        ],
+      };
+    });
     test('should render component with guessed words', () => {
       const { sut } = makeSut();
-      const guessedWordsComponent = findByTestAttribute(sut, 'guessed-words');
-      expect(guessedWordsComponent.length).toBe(1);
+      const guessedWordsNode = findByTestAttribute(sut, 'guessed-words');
+      expect(guessedWordsNode.length).toBe(1);
+    });
+
+    test('should render guessed words', () => {
+      const { sut } = makeSut(guessedWordsProps);
+      const guessedWordsNodes = findByTestAttribute(sut, 'guessed-word');
+      expect(guessedWordsNodes.length).toBe(3);
     });
   });
 });
