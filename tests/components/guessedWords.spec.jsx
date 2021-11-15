@@ -27,4 +27,20 @@ describe('GuessedWords', () => {
     };
     checkProps(GuessedWords, expectedProps);
   });
+  describe('Without words guessed', () => {
+    test('should render component without guessed words', () => {
+      const { sut } = makeSut({ guessedWords: [] });
+      const guessedWordsComponent = findByTestAttribute(sut, 'guessed-words');
+      expect(guessedWordsComponent.length).toBe(0);
+    });
+
+    test('should render no guessed words message', () => {
+      const { sut } = makeSut({ guessedWords: [] });
+      const guessedWordsMessage = findByTestAttribute(sut, 'no-guessed-words-message');
+      expect(guessedWordsMessage.length).toBe(1);
+      expect(guessedWordsMessage.text()).toBe('Guess the secret word!');
+    });
+  });
+
+  describe('With word guessed', () => {});
 });
