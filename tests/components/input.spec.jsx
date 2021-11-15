@@ -1,10 +1,14 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Input } from '../../src/components';
-import { findByTestAttribute } from '../utils';
+import { checkProps, findByTestAttribute } from '../utils';
 
-const makeSut = () => {
-  const sut = shallow(<Input />);
+const defaultProps = {
+  secretWord: 'party',
+};
+
+const makeSut = (props = defaultProps) => {
+  const sut = shallow(<Input {...props} />);
 
   return {
     sut,
@@ -16,5 +20,12 @@ describe('Input component', () => {
     const { sut } = makeSut();
     const appComponent = findByTestAttribute(sut, 'component-input');
     expect(appComponent.length).toBe(1);
+  });
+
+  test('should not throw warning with expected props', () => {
+    const expectedProps = {
+      secretWord: 'party',
+    };
+    checkProps(Input, expectedProps);
   });
 });
