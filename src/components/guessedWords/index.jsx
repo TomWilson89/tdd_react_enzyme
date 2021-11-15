@@ -29,7 +29,7 @@ const GuessedWords = ({ guessedWords }) => {
           </table>
         </div>
       ) : (
-        <span data-testid="guessed-words-intro">Guess the secret word!</span>
+        <span data-testid="no-guessed-words-message">Guess the secret word!</span>
       )}
     </div>
   );
