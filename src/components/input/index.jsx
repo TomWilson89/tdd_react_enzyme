@@ -12,6 +12,14 @@ const Input = ({ secretWord }) => {
       currentGuess: e.target.value,
     });
   };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setState({
+      currentGuess: '',
+    });
+  };
+
   return (
     <div data-testid="component-input">
       <form className="form-inline">
@@ -23,7 +31,12 @@ const Input = ({ secretWord }) => {
           value={state.currentGuess}
           onChange={handleChange}
         />
-        <button type="submit" className="btn btn-primary mb-2" data-testid="submit-button">
+        <button
+          type="submit"
+          className="btn btn-primary mb-2"
+          data-testid="submit-button"
+          onClick={handleClick}
+        >
           Submit
         </button>
       </form>
