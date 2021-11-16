@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import App from '../../src/components/App';
-import { findByTestAttribute } from '../utils';
+import App from '../../../src/components/App';
+import { findByTestAttribute } from '../../utils';
 
 const makeSut = () => {
   const sut = shallow(<App />);

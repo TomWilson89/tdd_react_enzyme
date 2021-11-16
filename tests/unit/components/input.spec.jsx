@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Input } from '../../src/components';
-import { checkProps, findByTestAttribute } from '../utils';
+import { Input } from '../../../src/components';
+import { checkProps, findByTestAttribute } from '../../utils';
 
 const mockSetCurrentGuess = jest.fn();
 
