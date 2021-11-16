@@ -10,7 +10,7 @@ const App = () => {
     { guessedWord: 'party', letterMatchCount: 5 },
   ];
   return (
-    <div className="container">
+    <div className="container" data-testid="component-app">
       <h1>Jotto</h1>
       <Congrats success />
       <GuessedWords guessedWords={guessedWords} />
