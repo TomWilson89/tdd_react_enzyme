@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 // eslint-disable-next-line no-unused-vars
 const Input = ({ secretWord }) => {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     currentGuess: '',
   });
 
