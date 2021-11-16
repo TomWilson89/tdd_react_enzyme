@@ -14,5 +14,9 @@ describe('getLetterMatchCount', () => {
     expect(matchCount).toBe(3);
   });
 
-  test('should return correct count when there are duplicate letters in the guess', () => {});
+  test('should return correct count when there are duplicate letters in the guess', () => {
+    const testWord = 'parka';
+    const matchCount = getLetterMatchCount(testWord, secretWord);
+    expect(matchCount).toBe(3);
+  });
 });
