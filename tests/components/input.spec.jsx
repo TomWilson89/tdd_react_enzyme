@@ -39,11 +39,17 @@ describe('Input component', () => {
   });
 
   describe('state control', () => {
-    test('should update with value of input box change', () => {
-      const { sut } = makeSut();
+    let sut;
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      sut = makeSut().sut;
       const inputBox = findByTestAttribute(sut, 'input-box');
       const mockEvent = { target: { value: 'train' } };
       inputBox.simulate('change', mockEvent);
+    });
+
+    test('should update with value of input box change', () => {
       const expectedState = {
         currentGuess: 'train',
       };
@@ -51,12 +57,17 @@ describe('Input component', () => {
     });
 
     test('should update input with correct values when state change ', () => {
-      const { sut } = makeSut();
-      const inputBox = findByTestAttribute(sut, 'input-box');
-      const mockEvent = { target: { value: 'train' } };
-      inputBox.simulate('change', mockEvent);
       const expectedState = {
         currentGuess: 'train',
+      };
+      expect(mockSetCurrentGuess).toHaveBeenCalledWith(expectedState);
+    });
+
+    test('should clear state when submit button is clicked', () => {
+      const submitButton = findByTestAttribute(sut, 'submit-button');
+      submitButton.simulate('click', { preventDefault: () => {} });
+      const expectedState = {
+        currentGuess: '',
       };
       expect(mockSetCurrentGuess).toHaveBeenCalledWith(expectedState);
     });
