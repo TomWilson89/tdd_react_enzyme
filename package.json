@@ -13,7 +13,9 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn test --watch",
     "test:staged": "yarn test --findRelatedTests",
-    "test:ci": "yarn test --coverage"
+    "test:ci": "yarn test --coverage",
+    "test:unit":"yarn test:watch -c jest-unit-config.js",
+    "test:integration":"yarn test:watch -c jest-integration-config.js"
   },
   "devDependencies": {
     "@babel/cli": "7.1.0",
