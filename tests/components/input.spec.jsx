@@ -28,4 +28,34 @@ describe('Input component', () => {
     };
     checkProps(Input, expectedProps);
   });
+
+  describe('state control', () => {
+    test('should update with value of input box change', () => {
+      const mockSetCurrentGuess = jest.fn();
+      React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
+      const { sut } = makeSut();
+      const inputBox = findByTestAttribute(sut, 'input-box');
+      const mockEvent = { target: { value: 'train' } };
+      inputBox.simulate('change', mockEvent);
+      const expectedState = {
+        currentGuess: 'train',
+      };
+      expect(mockSetCurrentGuess).toHaveBeenCalledWith(expectedState);
+    });
+
+    test('should update input with correct values when state change ', () => {
+      const mockSetCurrentGuess = jest.fn(() => {
+        'train';
+      });
+      React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
+      const { sut } = makeSut();
+      const inputBox = findByTestAttribute(sut, 'input-box');
+      const mockEvent = { target: { value: 'train' } };
+      inputBox.simulate('change', mockEvent);
+      const expectedState = {
+        currentGuess: 'train',
+      };
+      expect(mockSetCurrentGuess).toHaveBeenCalledWith(expectedState);
+    });
+  });
 });
