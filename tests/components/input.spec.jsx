@@ -14,6 +14,7 @@ jest.mock('react', () => {
 });
 const defaultProps = {
   secretWord: 'party',
+  success: false,
 };
 
 const makeSut = (props = defaultProps) => {
@@ -25,17 +26,49 @@ const makeSut = (props = defaultProps) => {
 };
 
 describe('Input component', () => {
-  test('should render withour error', () => {
-    const { sut } = makeSut();
-    const appComponent = findByTestAttribute(sut, 'component-input');
-    expect(appComponent.length).toBe(1);
+  describe('success is true', () => {
+    let sut;
+    beforeEach(() => {
+      const props = { ...defaultProps, success: true };
+      sut = makeSut(props).sut;
+    });
+
+    test('should render withour error', () => {
+      const appComponent = findByTestAttribute(sut, 'component-input');
+      expect(appComponent.length).toBe(1);
+    });
+
+    test('should not render input and button', () => {
+      const input = findByTestAttribute(sut, 'input-box');
+      const button = findByTestAttribute(sut, 'submit-button');
+      expect(input.exists()).toBe(false);
+      expect(button.exists()).toBe(false);
+    });
+  });
+
+  describe('success is false', () => {
+    let sut;
+    beforeEach(() => {
+      const props = { ...defaultProps, success: false };
+      sut = makeSut(props).sut;
+    });
+
+    test('should render withour error', () => {
+      const appComponent = findByTestAttribute(sut, 'component-input');
+      expect(appComponent.length).toBe(1);
+    });
+
+    test('should render input and button', () => {
+      const input = findByTestAttribute(sut, 'input-box');
+      const button = findByTestAttribute(sut, 'submit-button');
+      expect(input.exists()).toBe(true);
+      expect(button.exists()).toBe(true);
+    });
   });
 
   test('should not throw warning with expected props', () => {
-    const expectedProps = {
-      secretWord: 'party',
-    };
-    checkProps(Input, expectedProps);
+    const props = { ...defaultProps };
+    checkProps(Input, props);
   });
 
   describe('state control', () => {
