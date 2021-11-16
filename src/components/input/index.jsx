@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 // eslint-disable-next-line no-unused-vars
-const Input = ({ secretWord }) => {
+const Input = ({ secretWord, success }) => {
   const [state, setState] = useState({
     currentGuess: '',
   });
@@ -19,6 +19,10 @@ const Input = ({ secretWord }) => {
       currentGuess: '',
     });
   };
+
+  if (success) {
+    return <div data-testid="component-input" />;
+  }
 
   return (
     <div data-testid="component-input">
@@ -46,5 +50,6 @@ const Input = ({ secretWord }) => {
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
+  success: PropTypes.bool.isRequired,
 };
 export default Input;
