@@ -17,7 +17,15 @@ const defaultProps = {
   secretWord: 'party',
 };
 
-const makeSut = (initialState = {}, props = defaultProps) => {
+const initialStore = {
+  guessWords: {
+    success: false,
+    guessedWords: [],
+    secretWord: 'party',
+  },
+};
+
+const makeSut = (initialState = initialStore, props = defaultProps) => {
   const store = storeFactory(initialState);
   const sut = mount(
     <Provider store={store}>
@@ -35,7 +43,7 @@ describe('Input component', () => {
     let sut;
     beforeEach(() => {
       const props = { ...defaultProps };
-      const initialState = { guessWords: { success: true } };
+      const initialState = { guessWords: { ...initialStore.guessWords, success: true } };
       sut = makeSut(initialState, props).sut;
     });
 
@@ -56,7 +64,7 @@ describe('Input component', () => {
     let sut;
     beforeEach(() => {
       const props = { ...defaultProps };
-      const initialState = { guessWords: { success: false } };
+      const initialState = { ...initialStore };
       sut = makeSut(initialState, props).sut;
     });
 
@@ -83,7 +91,7 @@ describe('Input component', () => {
 
     beforeEach(() => {
       mockSetCurrentGuess.mockClear();
-      const initialState = { guessWords: { success: false } };
+      const initialState = { ...initialStore };
       sut = makeSut(initialState).sut;
       const inputBox = findByTestAttribute(sut, 'input-box');
       const mockEvent = { target: { value: 'train' } };
@@ -105,6 +113,9 @@ describe('Input component', () => {
     });
 
     test('should clear state when submit button is clicked', () => {
+      const inputBox = findByTestAttribute(sut, 'input-box');
+      const mockEvent = { target: { value: 'train' } };
+      inputBox.simulate('change', mockEvent);
       const submitButton = findByTestAttribute(sut, 'submit-button');
       submitButton.simulate('click', { preventDefault: () => {} });
       const expectedState = {
