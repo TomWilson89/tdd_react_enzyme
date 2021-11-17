@@ -1,7 +1,8 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Input } from '../../../src/components';
-import { checkProps, findByTestAttribute } from '../../utils';
+import { checkProps, findByTestAttribute, storeFactory } from '../../utils';
 
 const mockSetCurrentGuess = jest.fn();
 
@@ -14,11 +15,15 @@ jest.mock('react', () => {
 });
 const defaultProps = {
   secretWord: 'party',
-  success: false,
 };
 
-const makeSut = (props = defaultProps) => {
-  const sut = shallow(<Input {...props} />);
+const makeSut = (initialState = {}, props = defaultProps) => {
+  const store = storeFactory(initialState);
+  const sut = mount(
+    <Provider store={store}>
+      <Input {...props} />
+    </Provider>
+  );
 
   return {
     sut,
@@ -29,8 +34,9 @@ describe('Input component', () => {
   describe('success is true', () => {
     let sut;
     beforeEach(() => {
-      const props = { ...defaultProps, success: true };
-      sut = makeSut(props).sut;
+      const props = { ...defaultProps };
+      const initialState = { success: true };
+      sut = makeSut(initialState, props).sut;
     });
 
     test('should render withour error', () => {
@@ -49,8 +55,9 @@ describe('Input component', () => {
   describe('success is false', () => {
     let sut;
     beforeEach(() => {
-      const props = { ...defaultProps, success: false };
-      sut = makeSut(props).sut;
+      const props = { ...defaultProps };
+      const initialState = { success: false };
+      sut = makeSut(initialState, props).sut;
     });
 
     test('should render withour error', () => {
@@ -75,8 +82,9 @@ describe('Input component', () => {
     let sut;
 
     beforeEach(() => {
-      jest.clearAllMocks();
-      sut = makeSut().sut;
+      mockSetCurrentGuess.mockClear();
+      const initialState = { success: false };
+      sut = makeSut(initialState).sut;
       const inputBox = findByTestAttribute(sut, 'input-box');
       const mockEvent = { target: { value: 'train' } };
       inputBox.simulate('change', mockEvent);

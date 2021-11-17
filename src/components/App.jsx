@@ -20,7 +20,7 @@ const App = () => {
     <Provider store={store}>
       <div className="container" data-testid="component-app">
         <h1>Jotto</h1>
-        <Input secretWord={secretWord} success={success} />
+        <Input secretWord={secretWord} />
         <Congrats success={success} />
         <GuessedWords guessedWords={guessedWords} />
       </div>

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // eslint-disable-next-line no-unused-vars
-const Input = ({ secretWord, success }) => {
+const Input = ({ secretWord }) => {
+  const { success } = useSelector((state) => state);
   const [state, setState] = useState({
     currentGuess: '',
   });
@@ -50,6 +52,5 @@ const Input = ({ secretWord, success }) => {
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
 };
 export default Input;
