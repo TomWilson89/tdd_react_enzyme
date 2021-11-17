@@ -1,5 +1,6 @@
 import moxios from 'moxios';
-import { getSecretWord } from '../../src/actions';
+import { correctGuess, getSecretWord } from '../../src/actions';
+import { SUCCESS_TYPES } from '../../src/types';
 
 describe('getSecretWord', () => {
   beforeEach(() => {
@@ -23,5 +24,14 @@ describe('getSecretWord', () => {
     // update to test app in Redux / context sections
     const response = await getSecretWord();
     expect(response).toBe(secretWord);
+  });
+});
+
+describe('correctGuess', () => {
+  test('should return an object with correct type', () => {
+    const expectedAction = {
+      type: SUCCESS_TYPES.SUCCESS,
+    };
+    expect(correctGuess()).toStrictEqual(expectedAction);
   });
 });
