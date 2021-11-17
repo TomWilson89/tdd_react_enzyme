@@ -1,10 +1,10 @@
 // create root reducer
 
 import { combineReducers } from 'redux';
-import successReducer from './guessWord';
+import guessWords from './guessWord';
 
 const rootReducer = combineReducers({
-  guessWords: successReducer,
+  guessWords,
 });
 
 export default rootReducer;

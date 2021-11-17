@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { GUESS_WORD } from '../types';
 
 export const getSecretWord = async () => {
   const { data } = await axios.get('http://localhost:3030');
@@ -7,5 +8,8 @@ export const getSecretWord = async () => {
 
 // eslint-disable-next-line no-unused-vars
 export const guessWord = (guessedWord) => (dispatch) => {
-  dispatch();
+  dispatch({
+    type: GUESS_WORD.GUESS,
+    payload: guessedWord,
+  });
 };
