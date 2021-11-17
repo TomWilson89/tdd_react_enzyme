@@ -1,6 +1,6 @@
 import moxios from 'moxios';
-import { correctGuess, getSecretWord } from '../../src/actions';
-import { SUCCESS_TYPES } from '../../src/types';
+import { correctGuess, getSecretWord } from '../../../src/actions';
+import { SUCCESS_TYPES } from '../../../src/types';
 
 describe('getSecretWord', () => {
   beforeEach(() => {

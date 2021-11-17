@@ -1,5 +1,5 @@
-import successReducer from '../../src/reducers/success';
-import { SUCCESS_TYPES } from '../../src/types';
+import successReducer from '../../../src/reducers/success';
+import { SUCCESS_TYPES } from '../../../src/types';
 
 describe('successReducer', () => {
   test('should return false if previous state is undefined', () => {
