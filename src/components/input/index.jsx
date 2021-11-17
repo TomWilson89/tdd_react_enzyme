@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { guessWord } from '../../actions';
 
 // eslint-disable-next-line no-unused-vars
 const Input = ({ secretWord }) => {
   const { guessWords } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     currentGuess: '',
   });
@@ -17,6 +20,7 @@ const Input = ({ secretWord }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    dispatch(guessWord(state.currentGuess));
     setState({
       currentGuess: '',
     });

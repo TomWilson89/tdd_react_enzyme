@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -18,7 +19,7 @@ const GuessedWords = ({ guessedWords }) => {
             <tbody>
               {guessedWords.map((word, index) => {
                 return (
-                  <tr data-testid="guessed-word" key={word}>
+                  <tr data-testid="guessed-word" key={index}>
                     <td>{index + 1}</td>
                     <td>{word.guessedWord}</td>
                     <td>{word.letterMatchCount}</td>

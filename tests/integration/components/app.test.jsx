@@ -1,13 +1,27 @@
 /* eslint-disable no-unused-vars */
 import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import App from '../../../src/components/App';
-import { findByTestAttribute } from '../../utils';
+import { findByTestAttribute, storeFactory } from '../../utils';
 
-const defaultState = {};
+jest.mock('../../../src/actions');
+
+const defaultState = {
+  guessWords: {
+    success: false,
+    guessedWords: [],
+    secretWord: 'party',
+  },
+};
 
 const makeSut = (state = defaultState) => {
-  const sut = mount(<App />);
+  const store = storeFactory(state);
+  const sut = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
   const inputBox = findByTestAttribute(sut, 'input-box');
   const mockEvent = { target: { value: 'test' } };
   inputBox.simulate('change', mockEvent);
@@ -17,17 +31,12 @@ const makeSut = (state = defaultState) => {
   return { sut };
 };
 
-describe.skip('Main App Component ', () => {
+describe('Main App Component ', () => {
   describe('no words have been guessed', () => {
     let sut;
 
     beforeEach(() => {
-      const state = {
-        secretWord: 'party',
-        success: false,
-        guessedWords: [],
-      };
-      sut = makeSut(state).sut;
+      sut = makeSut().sut;
     });
 
     test('should create GuessedWords table with one row', () => {
@@ -41,9 +50,11 @@ describe.skip('Main App Component ', () => {
 
     beforeEach(() => {
       const state = {
-        secretWord: 'party',
-        success: false,
-        guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
+        guessWords: {
+          secretWord: 'party',
+          success: false,
+          guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
+        },
       };
       sut = makeSut(state).sut;
     });
@@ -59,9 +70,11 @@ describe.skip('Main App Component ', () => {
 
     beforeEach(() => {
       const state = {
-        secretWord: 'party',
-        success: false,
-        guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
+        guessWords: {
+          secretWord: 'party',
+          success: false,
+          guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
+        },
       };
 
       sut = makeSut(state).sut;
