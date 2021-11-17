@@ -1,6 +1,4 @@
-import 'core-js/stable';
 import moxios from 'moxios';
-import 'regenerator-runtime/runtime';
 import { getSecretWord } from '../../src/actions';
 
 describe('getSecretWord', () => {
