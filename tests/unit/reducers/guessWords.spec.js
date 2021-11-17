@@ -1,26 +1,24 @@
-import successReducer from '../../../src/reducers/guessWord';
+import guessWord from '../../../src/reducers/guessWord';
 import { GUESS_WORD } from '../../../src/types';
 
 describe('guessWordsReducer', () => {
   describe('Success case', () => {
     const initialState = {
       success: false,
+      guessedWords: [],
+      secretWord: 'party',
     };
-    test('should return false if previous state is undefined', () => {
-      const newState = successReducer(undefined, {});
-      expect(newState).toEqual(initialState);
-    });
 
     test('should return previous state if unkown type is provided', () => {
-      const oldState = successReducer(undefined, {});
+      const oldState = guessWord(initialState, {});
 
-      const newState = successReducer({ success: false }, { type: 'UNKNOWN' });
+      const newState = guessWord(initialState, { type: 'UNKNOWN' });
       expect(newState).toEqual(oldState);
     });
 
     test('should return true if SUCCESS type is provided', () => {
-      const newState = successReducer(true, { type: GUESS_WORD.SUCCESS });
-      expect(newState).toEqual({ success: true });
+      const newState = guessWord(initialState, { type: GUESS_WORD.SUCCESS });
+      expect(newState).toEqual({ ...initialState, success: true });
     });
   });
 });
