@@ -1,3 +1,4 @@
-export const SUCCESS_TYPES = {
+export const GUESS_WORD = {
   SUCCESS: 'SUCCESS',
+  GUESS: 'GUESS',
 };

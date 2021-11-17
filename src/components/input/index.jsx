@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 // eslint-disable-next-line no-unused-vars
 const Input = ({ secretWord }) => {
-  const { success } = useSelector((state) => state);
+  const { guessWords } = useSelector((state) => state);
   const [state, setState] = useState({
     currentGuess: '',
   });
@@ -22,7 +22,7 @@ const Input = ({ secretWord }) => {
     });
   };
 
-  if (success) {
+  if (guessWords.success) {
     return <div data-testid="component-input" />;
   }
 

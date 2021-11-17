@@ -35,7 +35,7 @@ describe('Input component', () => {
     let sut;
     beforeEach(() => {
       const props = { ...defaultProps };
-      const initialState = { success: true };
+      const initialState = { guessWords: { success: true } };
       sut = makeSut(initialState, props).sut;
     });
 
@@ -56,7 +56,7 @@ describe('Input component', () => {
     let sut;
     beforeEach(() => {
       const props = { ...defaultProps };
-      const initialState = { success: false };
+      const initialState = { guessWords: { success: false } };
       sut = makeSut(initialState, props).sut;
     });
 
@@ -83,7 +83,7 @@ describe('Input component', () => {
 
     beforeEach(() => {
       mockSetCurrentGuess.mockClear();
-      const initialState = { success: false };
+      const initialState = { guessWords: { success: false } };
       sut = makeSut(initialState).sut;
       const inputBox = findByTestAttribute(sut, 'input-box');
       const mockEvent = { target: { value: 'train' } };
