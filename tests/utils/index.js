@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import checkPropTypes from 'check-prop-types';
 
 export const findByTestAttribute = (wrapper, val) => wrapper.find(`[data-testid='${val}']`);
