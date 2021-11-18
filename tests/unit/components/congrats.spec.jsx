@@ -51,5 +51,9 @@ describe('LanguagePicker', () => {
     expect(congrats.text()).toBe('Congratulations! You guessed the word!');
   });
 
-  test('should render congrats in emoji', () => {});
+  test('should render congrats in emoji', () => {
+    const { sut } = makeSut({ context: { language: 'emoji' }, props: { success: true } });
+    const congrats = findByTestAttribute(sut, 'success-text');
+    expect(congrats.text()).toBe('🎯🎉');
+  });
 });
