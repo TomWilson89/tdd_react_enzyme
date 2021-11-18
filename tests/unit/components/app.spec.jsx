@@ -1,18 +1,38 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { getSecretWord } from '../../../src/actions';
 import App from '../../../src/components/App';
-import { findByTestAttribute } from '../../utils';
+
+jest.mock('../../../src/actions');
 
 const makeSut = () => {
-  const sut = shallow(<App />);
-
-  return { sut };
+  const sut = mount(<App />);
+  return {
+    sut,
+  };
 };
 
-describe('App component', () => {
-  test('should render withour any errors', () => {
+describe('Main react component', () => {
+  test('should render  non-empty and without error a', () => {
     const { sut } = makeSut();
-    const appComponent = findByTestAttribute(sut, 'component-app');
-    expect(appComponent.length).toBe(1);
+    expect(sut.exists()).toBe(true);
+  });
+
+  describe('getSecretWord', () => {
+    beforeEach(async () => {
+      await getSecretWord.mockClear();
+    });
+
+    test('should call getSecretWord on app mount', () => {
+      makeSut();
+      expect(getSecretWord).toHaveBeenCalledTimes(1);
+    });
+
+    test('should not call getSecretWord on app update', () => {
+      const { sut } = makeSut();
+      getSecretWord.mockClear();
+      sut.setProps();
+      expect(getSecretWord).toHaveBeenCalledTimes(0);
+    });
   });
 });
