@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const languageStrings = {
   en: {
     congrats: 'Congratulations! You guessed the word!',

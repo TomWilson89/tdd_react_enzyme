@@ -24,6 +24,7 @@ describe('Main react component', () => {
       secretWord,
       guessedWords: [],
       success: false,
+      language: 'en',
     };
 
     beforeEach(() => {

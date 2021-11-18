@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import languageContext from '../../context/language';
+import stringModule from '../../helpers/string';
 
-// eslint-disable-next-line no-unused-vars
 const Input = ({ secretWord, success }) => {
   const [state, setState] = useState({
     currentGuess: '',
   });
+
+  const { language } = useContext(languageContext);
 
   const handleChange = (e) => {
     setState({
@@ -30,7 +34,7 @@ const Input = ({ secretWord, success }) => {
         <input
           className="mb-2 sm-3"
           type="text"
-          placeholder="enter guess"
+          placeholder={stringModule.getStringByLanguage(language, 'guessInputPlaceholder')}
           data-testid="input-box"
           value={state.currentGuess}
           onChange={handleChange}
@@ -41,7 +45,7 @@ const Input = ({ secretWord, success }) => {
           data-testid="submit-button"
           onClick={handleClick}
         >
-          Submit
+          {stringModule.getStringByLanguage(language, 'submit')}
         </button>
       </form>
     </div>

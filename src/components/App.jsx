@@ -59,6 +59,7 @@ const App = () => {
       </div>
     );
   }
+
   return (
     <languageContext.Provider value={state.language}>
       <LanguagePicker setLanguage={setLanguage} />

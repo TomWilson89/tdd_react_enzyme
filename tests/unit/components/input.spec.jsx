@@ -1,6 +1,8 @@
-import { shallow } from 'enzyme';
+/* eslint-disable no-console */
+import { mount } from 'enzyme';
 import React from 'react';
 import { Input } from '../../../src/components';
+import languageContext from '../../../src/context/language';
 import { checkProps, findByTestAttribute } from '../../utils';
 
 const mockSetCurrentGuess = jest.fn();
@@ -17,8 +19,16 @@ const defaultProps = {
   success: false,
 };
 
-const makeSut = (props = defaultProps) => {
-  const sut = shallow(<Input {...props} />);
+const defaultContext = {
+  language: 'en',
+};
+
+const makeSut = ({ props = defaultProps, context = defaultContext } = {}) => {
+  const sut = mount(
+    <languageContext.Provider value={context}>
+      <Input {...props} />
+    </languageContext.Provider>
+  );
 
   return {
     sut,
@@ -30,7 +40,7 @@ describe('Input component', () => {
     let sut;
     beforeEach(() => {
       const props = { ...defaultProps, success: true };
-      sut = makeSut(props).sut;
+      sut = makeSut({ props }).sut;
     });
 
     test('should render withour error', () => {
@@ -103,6 +113,51 @@ describe('Input component', () => {
         currentGuess: '',
       };
       expect(mockSetCurrentGuess).toHaveBeenCalledWith(expectedState);
+    });
+  });
+
+  describe('LanguagePicker', () => {
+    const mockWarning = jest.fn();
+
+    let originalConsoleWarn;
+    beforeEach(() => {
+      originalConsoleWarn = console.warn;
+      console.warn = mockWarning;
+    });
+
+    afterEach(() => {
+      console.warn = originalConsoleWarn;
+    });
+
+    test('should render place holder in english', () => {
+      const { sut } = makeSut({ context: { language: 'en' } });
+      const inputBox = findByTestAttribute(sut, 'input-box');
+      const placeholder = inputBox.prop('placeholder');
+      expect(placeholder).toBe('enter guess');
+    });
+
+    test('should render place holder in emoji', () => {
+      const { sut } = makeSut({ context: { language: 'emoji' } });
+      const inputBox = findByTestAttribute(sut, 'input-box');
+      const placeholder = inputBox.prop('placeholder');
+      expect(placeholder).toBe('⌨️🤔');
+    });
+
+    test('should render submit button in english', () => {
+      const { sut } = makeSut({ context: { language: 'en' } });
+      const submitButton = findByTestAttribute(sut, 'submit-button');
+      expect(submitButton.text()).toBe('Submit');
+    });
+
+    test('should render submit button in emoji', () => {
+      const { sut } = makeSut({ context: { language: 'emoji' } });
+      const submitButton = findByTestAttribute(sut, 'submit-button');
+      expect(submitButton.text()).toBe('🚀');
+    });
+
+    test('should run console warning if trying to access an inavlid language', () => {
+      makeSut({ context: { language: 'invalid' } });
+      expect(mockWarning).toHaveBeenCalled();
     });
   });
 });
