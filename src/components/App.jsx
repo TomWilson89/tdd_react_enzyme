@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GuessedWords, Input } from '.';
 import { getSecretWord } from '../actions';
 import '../styles/global.css';
 import Congrats from './congrats';
 
 const App = () => {
+  const [secretWord, setSecretWord] = useState('');
   const guessedWords = [];
 
   const success = false;
-  const secretWord = 'party';
 
   useEffect(() => {
-    getSecretWord();
+    getSecretWord(setSecretWord);
   }, []);
 
   return (
