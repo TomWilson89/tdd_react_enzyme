@@ -16,6 +16,7 @@ const App = () => {
   return (
     <div className="container" data-testid="component-app">
       <h1>Jotto</h1>
+      <div>secret word: {guessWords.secretWord}</div>
       <Input secretWord={guessWords.secretWord} />
       <Congrats success={guessWords.success} />
       <GuessedWords guessedWords={guessWords.guessedWords} />
