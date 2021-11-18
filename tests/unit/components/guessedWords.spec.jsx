@@ -38,7 +38,7 @@ describe('GuessedWords', () => {
       const { sut } = makeSut({ guessedWords: [] });
       const guessedWordsMessage = findByTestAttribute(sut, 'no-guessed-words-message');
       expect(guessedWordsMessage.length).toBe(1);
-      expect(guessedWordsMessage.text()).toBe('Guess the secret word!');
+      expect(guessedWordsMessage.text()).toBe('Try to guess the secret word!');
     });
   });
 
@@ -65,5 +65,22 @@ describe('GuessedWords', () => {
       const guessedWordsNodes = findByTestAttribute(sut, 'guessed-word');
       expect(guessedWordsNodes.length).toBe(3);
     });
+  });
+});
+
+describe('LanguagePicker', () => {
+  test('should render guess instruction in english', () => {
+    const { sut } = makeSut({ guessedWords: [] });
+    const guessInstruction = findByTestAttribute(sut, 'no-guessed-words-message');
+    expect(guessInstruction.text()).toBe('Try to guess the secret word!');
+  });
+
+  test('should render guess instruction in emoji', () => {
+    const mockUseContext = jest.fn().mockReturnValue({ language: 'emoji' });
+    jest.spyOn(React, 'useContext').mockImplementation(mockUseContext);
+
+    const { sut } = makeSut({ guessedWords: [] });
+    const guessInstruction = findByTestAttribute(sut, 'no-guessed-words-message');
+    expect(guessInstruction.text()).toBe('🤔🤫🔤');
   });
 });
