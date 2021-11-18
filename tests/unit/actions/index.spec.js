@@ -1,5 +1,6 @@
 import moxios from 'moxios';
 import { getSecretWord } from '../../../src/actions';
+import { storeFactory } from '../../utils';
 
 describe('getSecretWord', () => {
   beforeEach(() => {
@@ -11,6 +12,7 @@ describe('getSecretWord', () => {
   });
 
   test('should return secret word', async () => {
+    const store = storeFactory();
     const secretWord = 'party';
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -20,8 +22,8 @@ describe('getSecretWord', () => {
       });
     });
 
-    // update to test app in Redux / context sections
-    const response = await getSecretWord();
-    expect(response).toBe(secretWord);
+    await store.dispatch(getSecretWord());
+    const state = store.getState().guessWords;
+    expect(state.secretWord).toBe(secretWord);
   });
 });
