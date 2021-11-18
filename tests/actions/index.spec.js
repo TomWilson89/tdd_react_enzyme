@@ -20,8 +20,9 @@ describe('getSecretWord', () => {
       });
     });
 
+    const setSecretWord = jest.fn();
     // update to test app in Redux / context sections
-    const response = await getSecretWord();
-    expect(response).toBe(secretWord);
+    await getSecretWord(setSecretWord);
+    expect(setSecretWord).toHaveBeenCalledWith(secretWord);
   });
 });
