@@ -28,7 +28,8 @@
     "react/function-component-definition": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+     "default-param-last": "off"
   },
   "overrides": [
     {

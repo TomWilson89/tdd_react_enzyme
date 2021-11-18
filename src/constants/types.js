@@ -1,0 +1,4 @@
+export const GUESS_WORDS = {
+  GUESS: 'GUESS',
+  SET_SECRET_WORD: 'SET_SECRET_WORD',
+};
