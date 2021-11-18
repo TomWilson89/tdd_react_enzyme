@@ -8,6 +8,12 @@ const initialState = {
 };
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GUESS_WORD.SET_SECRET_GUESS: {
+      return {
+        ...state,
+        secretWord: action.payload,
+      };
+    }
     case GUESS_WORD.SUCCESS: {
       return {
         ...state,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GuessedWords, Input } from '.';
 import { getSecretWord } from '../actions';
 import '../styles/global.css';
@@ -7,10 +7,11 @@ import Congrats from './congrats';
 
 const App = () => {
   const { guessWords } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getSecretWord();
-  }, []);
+    dispatch(getSecretWord());
+  }, [dispatch]);
 
   return (
     <div className="container" data-testid="component-app">

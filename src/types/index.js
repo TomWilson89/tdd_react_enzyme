@@ -1,4 +1,5 @@
 export const GUESS_WORD = {
   SUCCESS: 'SUCCESS',
   GUESS: 'GUESS',
+  SET_SECRET_GUESS: 'SET_SECRET_GUESS',
 };
