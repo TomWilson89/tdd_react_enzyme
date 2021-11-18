@@ -3,7 +3,7 @@ import React from 'react';
 
 const Congrats = ({ success }) => {
   return (
-    <div data-testid="component-congrats">
+    <div data-testid="component-congrats" className="mt-3 mb-3">
       {success && (
         <span className="alert alert-success" data-testid="success-text">
           Congrats!
