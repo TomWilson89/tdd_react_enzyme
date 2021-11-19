@@ -2,6 +2,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Input } from '../../../src/components';
+import guessedWordsContext from '../../../src/context/guessWord';
 import languageContext from '../../../src/context/language';
 import successContext from '../../../src/context/success';
 import { checkProps, findByTestAttribute } from '../../utils';
@@ -32,7 +33,9 @@ const makeSut = ({
   const sut = mount(
     <languageContext.Provider value={languageContextValue}>
       <successContext.SuccessProvider value={[successContextValue, jest.fn()]}>
-        <Input {...props} />
+        <guessedWordsContext.GuessWordsProvider>
+          <Input {...props} />
+        </guessedWordsContext.GuessWordsProvider>
       </successContext.SuccessProvider>
     </languageContext.Provider>
   );

@@ -1,8 +1,9 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
+import guessWordsContext from '../../context/guessWord';
 import languageContext from '../../context/language';
 import successContext from '../../context/success';
+import { getLetterMatchCount } from '../../helpers';
 import stringModule from '../../helpers/string';
 
 const Input = ({ secretWord }) => {
@@ -11,7 +12,8 @@ const Input = ({ secretWord }) => {
   });
 
   const { language } = useContext(languageContext);
-  const [success] = successContext.useSuccess();
+  const [success, setSuccess] = successContext.useSuccess();
+  const [guessWords, setGuessWords] = guessWordsContext.useGuessWords();
 
   const handleChange = (e) => {
     setState({
@@ -21,6 +23,13 @@ const Input = ({ secretWord }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    const letterMatchCount = getLetterMatchCount(state.currentGuess, secretWord);
+    const newGuessedWords = [...guessWords, { guessedWord: state.currentGuess, letterMatchCount }];
+    setGuessWords(newGuessedWords);
+
+    if (state.currentGuess === secretWord) {
+      setSuccess(true);
+    }
     setState({
       currentGuess: '',
     });

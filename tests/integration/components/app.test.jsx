@@ -1,23 +1,44 @@
 /* eslint-disable no-unused-vars */
 import { mount } from 'enzyme';
 import React from 'react';
-import App from '../../../src/components/App';
+import Congrats from '../../../src/components/congrats';
+import GuessedWords from '../../../src/components/guessedWords';
+import Input from '../../../src/components/input';
+import guessedWordsContext from '../../../src/context/guessWord';
+import languageContext from '../../../src/context/language';
+import successComponent from '../../../src/context/success';
 import { findByTestAttribute } from '../../utils';
 
-const defaultState = {};
+const defaultLanguageContextValue = {
+  language: 'en',
+};
 
-const makeSut = (state = defaultState) => {
-  const sut = mount(<App />);
+const makeSut = ({ secretWord, guessedWords }) => {
+  const sut = mount(
+    <languageContext.Provider value={defaultLanguageContextValue}>
+      <guessedWordsContext.GuessWordsProvider>
+        <successComponent.SuccessProvider>
+          <Congrats />
+          <Input secretWord={secretWord} />
+          <GuessedWords />
+        </successComponent.SuccessProvider>
+      </guessedWordsContext.GuessWordsProvider>
+    </languageContext.Provider>
+  );
   const inputBox = findByTestAttribute(sut, 'input-box');
-  const mockEvent = { target: { value: 'test' } };
-  inputBox.simulate('change', mockEvent);
   const submitButton = findByTestAttribute(sut, 'submit-button');
   submitButton.simulate('click', { preventDefault: () => {} });
+
+  guessedWords.forEach((guess) => {
+    const mockEvent = { target: { value: guess.guessedWord } };
+    inputBox.simulate('change', mockEvent);
+    submitButton.simulate('click', { preventDefault: () => {} });
+  });
 
   return { sut };
 };
 
-describe.skip('Main App Component ', () => {
+describe('Main App Component ', () => {
   describe('no words have been guessed', () => {
     let sut;
 
@@ -27,6 +48,7 @@ describe.skip('Main App Component ', () => {
         success: false,
         guessedWords: [],
       };
+
       sut = makeSut(state).sut;
     });
 

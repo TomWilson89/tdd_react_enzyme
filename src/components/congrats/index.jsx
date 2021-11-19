@@ -8,9 +8,9 @@ const Congrats = () => {
   const [success] = successContext.useSuccess();
 
   return (
-    <div data-testid="component-congrats">
+    <div data-testid="component-congrats" className="mt-3 mb-3">
       {success && (
-        <span className="alert alert-success" data-testid="success-text">
+        <span className="alert alert-success " data-testid="success-text">
           {stringModule.getStringByLanguage(language, 'congrats')}
         </span>
       )}

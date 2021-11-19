@@ -68,15 +68,15 @@ const App = () => {
     <languageContext.Provider value={contextState}>
       <div className="container" data-testid="component-app">
         <h1>Jotto</h1>
+        <div>secret word is {state.secretWord}</div>
         <LanguagePicker setLanguage={setLanguage} />
         <guessWordsContext.GuessWordsProvider>
           <successContext.SuccessProvider>
             <Input secretWord={state.secretWord} />
             <Congrats />
+            <GuessedWords />
           </successContext.SuccessProvider>
         </guessWordsContext.GuessWordsProvider>
-
-        <GuessedWords />
       </div>
     </languageContext.Provider>
   );
