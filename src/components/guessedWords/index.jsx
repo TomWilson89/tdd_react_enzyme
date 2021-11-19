@@ -5,6 +5,7 @@ import stringModule from '../../helpers/string';
 
 const GuessedWords = ({ guessedWords }) => {
   const { language } = React.useContext(languageContext);
+
   return (
     <div data-testid="component-guessed-words">
       {guessedWords.length ? (

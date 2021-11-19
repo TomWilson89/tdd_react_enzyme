@@ -50,6 +50,8 @@ const App = () => {
     getSecretWord(setSecretWord);
   }, []);
 
+  const contextState = React.useMemo(() => ({ language: state.language }), [state.language]);
+
   if (!state.secretWord) {
     return (
       <div data-testid="component-spinner" className="container">
@@ -61,7 +63,7 @@ const App = () => {
   }
 
   return (
-    <languageContext.Provider value={state.language}>
+    <languageContext.Provider value={contextState}>
       <LanguagePicker setLanguage={setLanguage} />
 
       <div className="container" data-testid="component-app">
