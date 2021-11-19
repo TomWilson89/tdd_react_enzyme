@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Input } from '../../../src/components';
 import languageContext from '../../../src/context/language';
+import successContext from '../../../src/context/success';
 import { checkProps, findByTestAttribute } from '../../utils';
 
 const mockSetCurrentGuess = jest.fn();
@@ -16,17 +17,23 @@ jest.mock('react', () => {
 });
 const defaultProps = {
   secretWord: 'party',
-  success: false,
 };
 
-const defaultContext = {
+const defaultLanguageContextValue = {
   language: 'en',
 };
+const defaultSuccessContextValue = false;
 
-const makeSut = ({ props = defaultProps, context = defaultContext } = {}) => {
+const makeSut = ({
+  props = defaultProps,
+  languageContextValue = defaultLanguageContextValue,
+  successContextValue = defaultSuccessContextValue,
+} = {}) => {
   const sut = mount(
-    <languageContext.Provider value={context}>
-      <Input {...props} />
+    <languageContext.Provider value={languageContextValue}>
+      <successContext.SuccessProvider value={[successContextValue, jest.fn()]}>
+        <Input {...props} />
+      </successContext.SuccessProvider>
     </languageContext.Provider>
   );
 
@@ -39,8 +46,7 @@ describe('Input component', () => {
   describe('success is true', () => {
     let sut;
     beforeEach(() => {
-      const props = { ...defaultProps, success: true };
-      sut = makeSut({ props }).sut;
+      sut = makeSut({ successContextValue: true }).sut;
     });
 
     test('should render withour error', () => {
@@ -59,8 +65,7 @@ describe('Input component', () => {
   describe('success is false', () => {
     let sut;
     beforeEach(() => {
-      const props = { ...defaultProps, success: false };
-      sut = makeSut(props).sut;
+      sut = makeSut({ successContextValue: false }).sut;
     });
 
     test('should render withour error', () => {
@@ -130,33 +135,33 @@ describe('Input component', () => {
     });
 
     test('should render place holder in english', () => {
-      const { sut } = makeSut({ context: { language: 'en' } });
+      const { sut } = makeSut({ languageContextValue: { language: 'en' } });
       const inputBox = findByTestAttribute(sut, 'input-box');
       const placeholder = inputBox.prop('placeholder');
       expect(placeholder).toBe('enter guess');
     });
 
     test('should render place holder in emoji', () => {
-      const { sut } = makeSut({ context: { language: 'emoji' } });
+      const { sut } = makeSut({ languageContextValue: { language: 'emoji' } });
       const inputBox = findByTestAttribute(sut, 'input-box');
       const placeholder = inputBox.prop('placeholder');
       expect(placeholder).toBe('⌨️🤔');
     });
 
     test('should render submit button in english', () => {
-      const { sut } = makeSut({ context: { language: 'en' } });
+      const { sut } = makeSut({ languageContextValue: { language: 'en' } });
       const submitButton = findByTestAttribute(sut, 'submit-button');
       expect(submitButton.text()).toBe('Submit');
     });
 
     test('should render submit button in emoji', () => {
-      const { sut } = makeSut({ context: { language: 'emoji' } });
+      const { sut } = makeSut({ languageContextValue: { language: 'emoji' } });
       const submitButton = findByTestAttribute(sut, 'submit-button');
       expect(submitButton.text()).toBe('🚀');
     });
 
     test('should run console warning if trying to access an inavlid language', () => {
-      makeSut({ context: { language: 'invalid' } });
+      makeSut({ languageContextValue: { language: 'invalid' } });
       expect(mockWarning).toHaveBeenCalled();
     });
   });

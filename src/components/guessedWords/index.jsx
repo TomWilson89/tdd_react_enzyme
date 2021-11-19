@@ -1,10 +1,12 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
+import guessedWordsContext from '../../context/guessWord';
 import languageContext from '../../context/language';
 import stringModule from '../../helpers/string';
 
-const GuessedWords = ({ guessedWords }) => {
+const GuessedWords = () => {
   const { language } = React.useContext(languageContext);
+  const [guessedWords] = guessedWordsContext.useGuessWords();
 
   return (
     <div data-testid="component-guessed-words">
@@ -22,7 +24,7 @@ const GuessedWords = ({ guessedWords }) => {
             <tbody>
               {guessedWords.map((word, index) => {
                 return (
-                  <tr data-testid="guessed-word" key={word}>
+                  <tr data-testid="guessed-word" key={index}>
                     <td>{index + 1}</td>
                     <td>{word.guessedWord}</td>
                     <td>{word.letterMatchCount}</td>
@@ -41,12 +43,4 @@ const GuessedWords = ({ guessedWords }) => {
   );
 };
 
-GuessedWords.propTypes = {
-  guessedWords: PropTypes.arrayOf(
-    PropTypes.shape({
-      guessedWord: PropTypes.string.isRequired,
-      letterMatchCount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-};
 export default GuessedWords;

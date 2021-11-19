@@ -2,12 +2,20 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { getSecretWord } from '../../../src/actions';
 import App from '../../../src/components/App';
+import guessWordsContext from '../../../src/context/guessWord';
+import successContext from '../../../src/context/success';
 import { findByTestAttribute } from '../../utils';
 
 jest.mock('../../../src/actions');
 
 const makeSut = () => {
-  const sut = mount(<App />);
+  const sut = mount(
+    <guessWordsContext.GuessWordsProvider>
+      <successContext.SuccessProvider>
+        <App />
+      </successContext.SuccessProvider>
+    </guessWordsContext.GuessWordsProvider>
+  );
   return {
     sut,
   };

@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { GuessedWords, Input } from '.';
 import { getSecretWord } from '../actions';
 import { GUESS_WORDS, LANGUAGES } from '../constants/types';
+import guessWordsContext from '../context/guessWord';
 import languageContext from '../context/language';
+import successContext from '../context/success';
 import '../styles/global.css';
 import Congrats from './congrats';
 import LanguagePicker from './languagePicker';
@@ -64,13 +66,17 @@ const App = () => {
 
   return (
     <languageContext.Provider value={contextState}>
-      <LanguagePicker setLanguage={setLanguage} />
-
       <div className="container" data-testid="component-app">
         <h1>Jotto</h1>
-        <Input secretWord={state.secretWord} success={state.success} />
-        <Congrats success={state.success} />
-        <GuessedWords guessedWords={state.guessedWords} />
+        <LanguagePicker setLanguage={setLanguage} />
+        <guessWordsContext.GuessWordsProvider>
+          <successContext.SuccessProvider>
+            <Input secretWord={state.secretWord} />
+            <Congrats />
+          </successContext.SuccessProvider>
+        </guessWordsContext.GuessWordsProvider>
+
+        <GuessedWords />
       </div>
     </languageContext.Provider>
   );

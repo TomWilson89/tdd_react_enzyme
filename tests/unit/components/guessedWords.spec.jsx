@@ -1,14 +1,22 @@
-import { shallow } from 'enzyme';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import { mount } from 'enzyme';
 import React from 'react';
 import { GuessedWords } from '../../../src/components';
-import { checkProps, findByTestAttribute } from '../../utils';
+import guessedWordsContext from '../../../src/context/guessWord';
+import languageContext from '../../../src/context/language';
+import { findByTestAttribute } from '../../utils';
 
-const defaultProps = {
-  guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
-};
+const defaultGuessedWords = [{ guessedWord: 'train', letterMatchCount: 3 }];
 
-const makeSut = (props = defaultProps) => {
-  const sut = shallow(<GuessedWords {...props} />);
+const makeSut = ({ guessWordsContextValue = defaultGuessedWords } = {}) => {
+  const mockUseGuessedWords = jest.fn().mockReturnValue([guessWordsContextValue, jest.fn()]);
+  guessedWordsContext.useGuessWords = mockUseGuessedWords;
+
+  const sut = mount(
+    <languageContext.Provider value={{ language: 'en' }}>
+      <GuessedWords />
+    </languageContext.Provider>
+  );
   return {
     sut,
   };
@@ -21,21 +29,15 @@ describe('GuessedWords', () => {
     expect(appComponent.length).toBe(1);
   });
 
-  test('should not throw warning with expected props', () => {
-    const expectedProps = {
-      guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
-    };
-    checkProps(GuessedWords, expectedProps);
-  });
   describe('Without words guessed', () => {
     test('should render component without guessed words', () => {
-      const { sut } = makeSut({ guessedWords: [] });
+      const { sut } = makeSut({ guessWordsContextValue: [] });
       const guessedWordsComponent = findByTestAttribute(sut, 'guessed-words');
       expect(guessedWordsComponent.length).toBe(0);
     });
 
     test('should render no guessed words message', () => {
-      const { sut } = makeSut({ guessedWords: [] });
+      const { sut } = makeSut({ guessWordsContextValue: [] });
       const guessedWordsMessage = findByTestAttribute(sut, 'no-guessed-words-message');
       expect(guessedWordsMessage.length).toBe(1);
       expect(guessedWordsMessage.text()).toBe('Try to guess the secret word!');
@@ -46,13 +48,11 @@ describe('GuessedWords', () => {
     let guessedWordsProps;
 
     beforeEach(() => {
-      guessedWordsProps = {
-        guessedWords: [
-          { guessedWord: 'train', letterMatchCount: 3 },
-          { guessedWord: 'agile', letterMatchCount: 1 },
-          { guessedWord: 'party', letterMatchCount: 5 },
-        ],
-      };
+      guessedWordsProps = [
+        { guessedWord: 'train', letterMatchCount: 3 },
+        { guessedWord: 'agile', letterMatchCount: 1 },
+        { guessedWord: 'party', letterMatchCount: 5 },
+      ];
     });
     test('should render component with guessed words', () => {
       const { sut } = makeSut();
@@ -61,7 +61,7 @@ describe('GuessedWords', () => {
     });
 
     test('should render guessed words', () => {
-      const { sut } = makeSut(guessedWordsProps);
+      const { sut } = makeSut({ guessWordsContextValue: guessedWordsProps });
       const guessedWordsNodes = findByTestAttribute(sut, 'guessed-word');
       expect(guessedWordsNodes.length).toBe(3);
     });
@@ -70,7 +70,7 @@ describe('GuessedWords', () => {
 
 describe('LanguagePicker', () => {
   test('should render guess instruction in english', () => {
-    const { sut } = makeSut({ guessedWords: [] });
+    const { sut } = makeSut({ guessWordsContextValue: [] });
     const guessInstruction = findByTestAttribute(sut, 'no-guessed-words-message');
     expect(guessInstruction.text()).toBe('Try to guess the secret word!');
   });
@@ -79,7 +79,7 @@ describe('LanguagePicker', () => {
     const mockUseContext = jest.fn().mockReturnValue({ language: 'emoji' });
     jest.spyOn(React, 'useContext').mockImplementation(mockUseContext);
 
-    const { sut } = makeSut({ guessedWords: [] });
+    const { sut } = makeSut({ guessWordsContextValue: [] });
     const guessInstruction = findByTestAttribute(sut, 'no-guessed-words-message');
     expect(guessInstruction.text()).toBe('🤔🤫🔤');
   });
